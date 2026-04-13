@@ -3,220 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Del Sol Build Tracker</title>
+    <title>Del Sol | Summer Build</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --text-main: #ffffff;
-            --text-muted: #a0a0a0;
-            --accent-green: #2ecc71;
-            --accent-yellow: #f1c40f;
-            --danger-red: #e74c3c;
+            --glass: rgba(30, 41, 59, 0.7);
+            --sunset: linear-gradient(135deg, #f59e0b, #ef4444);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        body { 
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a); 
+            color: #f8fafc; 
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
         }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
+        .glass { 
+            background: var(--glass); 
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 24px; 
         }
-
-        /* Header & Progress Bar */
-        header {
-            margin-bottom: 30px;
-            text-align: center;
+        .checkbox-custom { 
+            width: 28px; height: 28px; border-radius: 10px; 
+            border: 2px solid #475569; appearance: none; 
+            cursor: pointer; position: relative; transition: all 0.2s;
+            background: rgba(15, 23, 42, 0.6);
         }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+        .checkbox-custom:checked { 
+            background: #f59e0b; border-color: #f59e0b; 
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
         }
-
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 20px;
+        .checkbox-custom:checked::after { 
+            content: '✓'; position: absolute; color: white; 
+            font-size: 18px; top: 0; left: 5px; font-weight: 900;
         }
-
-        .progress-container {
-            background-color: #333;
-            border-radius: 10px;
-            height: 12px;
-            width: 100%;
-            overflow: hidden;
-            margin-bottom: 10px;
+        .strikethrough { text-decoration: line-through; opacity: 0.3; filter: grayscale(1); }
+        .progress-fill {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24, #0ea5e9);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        .progress-bar {
-            height: 100%;
-            background-color: var(--accent-green);
-            width: 0%;
-            transition: width 0.5s ease-in-out;
-        }
-
-        .progress-stats {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: bold;
-        }
-
-        /* Card Layout */
-        .parts-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            border-left: 4px solid transparent;
-        }
-
-        .card.purchased {
-            border-left-color: var(--accent-green);
-        }
-
-        .card.pending {
-            border-left-color: var(--accent-yellow);
-        }
-
-        .card-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .item-name {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .item-store {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .card-price-status {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 6px;
-        }
-
-        .item-price {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--text-main);
-        }
-
-        .status-badge {
-            font-size: 10px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .status-purchased {
-            background-color: rgba(46, 204, 113, 0.2);
-            color: var(--accent-green);
-        }
-
-        .status-pending {
-            background-color: rgba(241, 196, 15, 0.2);
-            color: var(--accent-yellow);
+        .summer-glow {
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
         }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-10 pb-20">
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <h1 class="text-6xl font-black tracking-tighter italic summer-glow">
+                    DEL SOL <span class="text-orange-500 uppercase not-italic text-4xl block md:inline ml-0 md:ml-2">Summer '26</span>
+                </h1>
+                <p class="text-sky-400 font-bold tracking-[0.3em] text-[10px] uppercase mt-4 flex items-center gap-2">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                    </span>
+                    Live Restoration Tracker
+                </p>
+            </div>
+            <div class="glass px-8 py-5 flex flex-col items-end">
+                <span class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-1">Investment Spent</span>
+                <span class="text-4xl font-black text-white font-mono" id="total-spent">$0.00</span>
+            </div>
+        </header>
 
-    <header>
-        <h1>D15B7 REVIVAL</h1>
-        <div class="subtitle">Stage 1: Reliability & Safety</div>
-        
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
+        <div class="mb-12 glass p-6 border-t-2 border-t-orange-500/50">
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-1">Completion Status</h3>
+                    <div class="text-3xl font-black text-white" id="progress-text">0%</div>
+                </div>
+                <div id="sync-indicator" class="text-[9px] font-bold px-3 py-1 rounded-full bg-slate-900/50 text-emerald-400 border border-emerald-500/20">
+                    SYSTEM READY
+                </div>
+            </div>
+            <div class="w-full bg-slate-900/90 h-6 rounded-2xl overflow-hidden p-1.5 border border-white/5">
+                <div id="progress-bar" class="progress-fill h-full rounded-xl" style="width: 0%"></div>
+            </div>
         </div>
-        <div class="progress-stats">
-            <span id="spentText">$0.00 Spent</span>
-            <span id="percentText">0% Complete</span>
-        </div>
-    </header>
 
-    <div class="parts-list" id="partsContainer">
-        </div>
+        <div id="dashboard-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            </div>
+
+        <footer class="mt-20 text-center text-slate-600 text-[10px] font-bold tracking-[0.5em] uppercase">
+            Build • Drive • Repeat
+        </footer>
+    </div>
 
     <script>
-        // Your specific dashboard data
-        const partsData = [
-            { id: 1, item: "EverStart Maxx 51R Battery", price: 83.19, store: "Walmart", status: true },
-            { id: 26, item: "185/60/R15 Tires (Rear)", price: 80.03, store: "Thompson Tires", status: true },
-            { id: 2, item: "Autolite Platinum Spark Plugs", price: 21.02, store: "Advance Auto", status: true },
-            { id: 3, item: "Negative Battery Cable", price: 18.95, store: "Advance Auto", status: true },
-            { id: 4, item: "PB Blaster Penetrating Oil", price: 6.99, store: "Advance Auto", status: true },
-            { id: 9, item: "Argos 5W-30 Oil & Filter", price: 22.00, store: "Advance Auto", status: true },
-            { id: 5, item: "Intake Hose & Air Filter Kit", price: 33.59, store: "eBay", status: true },
-            { id: 6, item: "Valve Cover Seal Kit", price: 13.68, store: "eBay", status: true },
-            { id: 7, item: "Valve Cover Gasket", price: 15.74, store: "eBay", status: true }
-        ];
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzEoA7ZG9oineUWv18rMQbK_aR89TotLiHSQC3fcq5e_ljWsY3mF7XeeMCK_MFt92RL3A/exec";
+        
+        let localData = [];
 
-        function renderDashboard() {
-            const container = document.getElementById('partsContainer');
-            let totalSpent = 0;
-            let totalCost = 0;
+        const categoryStyles = {
+            'Engine': 'border-l-orange-500',
+            'Mechanical': 'border-l-sky-500',
+            'Interior': 'border-l-emerald-500',
+            'Cosmetic': 'border-l-fuchsia-500'
+        };
 
-            partsData.forEach(part => {
-                totalCost += part.price;
-                if (part.status) totalSpent += part.price;
-
-                // Create Card element
-                const card = document.createElement('div');
-                card.className = `card ${part.status ? 'purchased' : 'pending'}`;
-                
-                card.innerHTML = `
-                    <div class="card-info">
-                        <div class="item-name">${part.item}</div>
-                        <div class="item-store">${part.store}</div>
-                    </div>
-                    <div class="card-price-status">
-                        <div class="item-price">$${part.price.toFixed(2)}</div>
-                        <div class="status-badge ${part.status ? 'status-purchased' : 'status-pending'}">
-                            ${part.status ? 'Purchased' : 'Pending'}
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-
-            // Update Progress Bar Math
-            const percentComplete = Math.round((totalSpent / totalCost) * 100);
-            document.getElementById('progressBar').style.width = `${percentComplete}%`;
-            document.getElementById('percentText').innerText = `${percentComplete}% Complete`;
-            document.getElementById('spentText').innerText = `$${totalSpent.toFixed(2)} Spent`;
+        async function init() {
+            setSyncStatus('SYNCING...', 'amber');
+            try {
+                const response = await fetch(SCRIPT_URL);
+                localData = await response.json();
+                render();
+                setSyncStatus('SYSTEM READY', 'emerald');
+            } catch (e) {
+                setSyncStatus('OFFLINE', 'red');
+            }
         }
 
-        // Initialize App
-        renderDashboard();
-    </script>
+        function calculateStats() {
+            let spent = 0;
+            let completed = 0;
+            localData.forEach(item => {
+                const isDone = (item.status === true || item.status === "TRUE");
+                if (isDone) {
+                    spent += item.price;
+                    completed++;
+                }
+            });
+            return { spent, percent: Math.round((completed / localData.length) * 100) };
+        }
 
+        function render() {
+            const grid = document.getElementById('dashboard-grid');
+            grid.innerHTML = '';
+
+            const categories = [...new Set(localData.map(i => i.category))];
+            
+            categories.forEach(cat => {
+                const section = document.createElement('div');
+                section.innerHTML = `
+                    <h2 class="text-xs font-black uppercase tracking-[0.3em] text-slate-500 mb-4 ml-2">${cat}</h2>
+                    <div class="space-y-3" id="items-${cat}"></div>
+                `;
+                grid.appendChild(section);
+
+                const container = document.getElementById(`items-${cat}`);
+                localData.filter(i => i.category === cat).forEach(item => {
+                    const isDone = (item.status === true || item.status === "TRUE");
+                    const card = document.createElement('div');
+                    card.className = `glass p-4 flex items-center justify-between border-l-4 ${categoryStyles[cat] || 'border-l-slate-500'} ${isDone ? 'bg-slate-900/40' : ''}`;
+                    card.innerHTML = `
+                        <div class="flex items-center gap-4">
+                            <input type="checkbox" class="checkbox-custom" 
+                                ${isDone ? 'checked' : ''} 
+                                onchange="handleToggle(${item.id}, this.checked)">
+                            <div>
+                                <h4 class="font-bold text-sm ${isDone ? 'strikethrough' : ''}">${item.item}</h4>
+                                <p class="text-[10px] font-black text-slate-500 mt-1 uppercase tracking-tighter">
+                                    $${item.price.toFixed(2)} • <a href="${item.link}" target="_blank" class="text-orange-400 hover:text-white transition">Source</a>
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+
+            updateUI();
+        }
+
+        function updateUI() {
+            const stats = calculateStats();
+            document.getElementById('total-spent').innerText = `$${stats.spent.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            document.getElementById('progress-bar').style.width = stats.percent + '%';
+            document.getElementById('progress-text').innerText = stats.percent + '%';
+        }
+
+        async function handleToggle(id, isChecked) {
+            // Real-time optimistic update
+            const item = localData.find(i => i.id === id);
+            if (item) {
+                item.status = isChecked;
+                updateUI(); // Reflect price and progress instantly
+                
+                // Re-render to strike through the text and dim the card
+                render(); 
+            }
+
+            setSyncStatus('SAVING...', 'amber');
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ id: id, status: isChecked })
+                });
+                setSyncStatus('SYSTEM READY', 'emerald');
+            } catch (e) {
+                setSyncStatus('SAVE FAILED', 'red');
+            }
+        }
+
+        function setSyncStatus(msg, color) {
+            const el = document.getElementById('sync-indicator');
+            el.innerText = msg;
+            el.style.color = color === 'amber' ? '#fbbf24' : color === 'red' ? '#f87171' : '#34d399';
+            el.style.borderColor = color === 'amber' ? '#fbbf2433' : color === 'red' ? '#f8717133' : '#34d39933';
+        }
+
+        init();
+    </script>
 </body>
 </html>
